@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 profile">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2> {{'OWNER.TITLE' | translate }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>{{'OWNER.NAME' | translate }}</strong>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" ng-model="owner.name">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>{{'OWNER.SURNAME' | translate }}</strong>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" ng-model="owner.surname">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>{{'OWNER.EMAIL' | translate }}</strong>
+                </div>
+                <div class="col-md-4">
+                    <input required type="email" ng-model="owner.email">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>{{'OWNER.PASSWORD' | translate }}</strong>
+                </div>
+                <div class="col-md-4">
+                    <input required type="password" ng-model="owner.password">
+                </div>
+            </div>
+            <hr>
+            <div class="row margin-top">
+                <div class="col-md-12">
+                    <button ng-click="submitProfile()" class="btn btn-primary">OK</button>
+                    <div class="error">{{error}}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

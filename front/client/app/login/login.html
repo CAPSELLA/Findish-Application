@@ -1,0 +1,39 @@
+<script type="text/javascript">
+(function (d) {
+        // load the Facebook javascript SDK
+        var js,
+            id = 'facebook-jssdk',
+            ref = d.getElementsByTagName('script')[0];
+
+        if (d.getElementById(id)) {
+            return;
+        }
+
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+
+        ref.parentNode.insertBefore(js, ref);
+
+    }(document));
+</script>
+<div class="login-back">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 login-card">
+            <h2>{{'LOGIN' | translate }}</h2>
+           <a class="fb-login" ui-sref="profile">
+                <img src="../assets/meal_images/fb-cicle.png">
+            </a>
+          <!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false"
+                data-auto-logout-link="false" data-use-continue-as="false"></div>-->
+           <div class="rest-owner-link">
+                <span> {{ 'LOGINOWNER' | translate }}
+                    <strong>
+                        <a ui-sref="loginOwner"> {{ 'LOGINOWNERCTA' | translate }} </a>
+                    </strong>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

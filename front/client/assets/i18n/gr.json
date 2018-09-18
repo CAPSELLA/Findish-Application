@@ -1,0 +1,10 @@
+{
+    "SEARCHBYMEAL_PLACEHOLDER": "Ψάξε βάση γεύματος",
+    "SCORES":{
+        "AMBIENCE":"Άνεση",
+        "FOOD":"Φαγητό",
+        "PRICE":"Τιμή",
+        "DISTSCORE":"Απόσταση",
+        "DESTINATION":"Διαδρομή"
+    }
+}

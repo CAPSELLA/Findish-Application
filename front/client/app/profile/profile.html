@@ -1,0 +1,92 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 profile">
+			<div class="row">
+				<div class="col-md-12">
+					{{'PROF.INFO' | translate }}
+					<br><br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<strong>{{'PROF.DISNAME' | translate }}</strong>
+				</div>
+				<div class="col-md-9">
+					<input type="text" ng-model="user.displayName">
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-3">
+					<strong>{{'PROF.GENDER.TITLE' | translate }}</strong>
+				</div>
+				<div class="col-md-9">
+					<label class="display-inline-block custom-control custom-radio">
+						<input ng-model="user.gender" class="custom-control-input" value="male" type="radio">
+						<span class="custom-control-indicator"></span>
+						<span class="custom-control-description">{{'PROF.GENDER.MALE' | translate }}</span>
+					</label>
+					<label class="display-inline-block custom-control custom-radio">
+						<input ng-model="user.gender" class="custom-control-input" value="female" type="radio">
+						<span class="custom-control-indicator"></span>
+						<span class="custom-control-description">{{'PROF.GENDER.FEMALE' | translate }}</span>
+					</label>
+				</div>
+			</div>
+			<hr>
+			<div class="row profile-age">
+				<div class="col-md-3">
+					<strong>{{'PROF.AGE' | translate }}</strong>
+				</div>
+				<div class="col-md-9">
+					<label class="display-inline-block custom-control custom-radio">
+						<input ng-model="user.age" class="custom-control-input" value="a" type="radio">
+						<span class="custom-control-indicator"></span>
+						<span class="custom-control-description">18-30</span>
+					</label>
+					<label class="display-inline-block custom-control custom-radio">
+						<input ng-model="user.age" class="custom-control-input" value="b" type="radio">
+						<span class="custom-control-indicator"></span>
+						<span class="custom-control-description">30-45</span>
+					</label>
+					<label class="display-inline-block custom-control custom-radio">
+						<input ng-model="user.age" class="custom-control-input" value="c" type="radio">
+						<span class="custom-control-indicator"></span>
+						<span class="custom-control-description">46-60</span>
+					</label>
+					<label class="display-inline-block custom-control custom-radio">
+						<input ng-model="user.age" class="custom-control-input" value="d" type="radio">
+						<span class="custom-control-indicator"></span>
+						<span class="custom-control-description">60+</span>
+					</label>
+				</div>
+			</div>
+			<hr>
+			<div class="row profile-cuisine">
+				<div class="col-md-3">
+					<div class="profile-title-cuisine">
+						<strong>{{'PROF.CUISINE' | translate }}</strong>
+					</div>
+					<div class="profile-subtitle">
+						<p class="choices">{{'PROF.CUISCHOICES' | translate }}</p>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<label ng-repeat="c in cuisines" class="display-inline-block custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" name="selectedCuisines[]" value="{{c}}" ng-checked="selection.indexOf(c) > -1"
+						 ng-click="toggleSelectCuisine(c)">
+						<span class="custom-control-indicator"></span>
+						<span class="custom-control-description"> {{ 'CUISINES.'+c | translate }}</span>
+					</label>
+				</div>
+			</div>
+			<div class="row margin-top">
+				<div class="col-md-12">
+					<button ng-click="submitProfile()" class="btn btn-primary">OK</button>
+					<div class="error">{{error}}</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

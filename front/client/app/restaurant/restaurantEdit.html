@@ -1,0 +1,439 @@
+<div class="content-wrapper">
+    <div class="row rest-header oneRow">
+        <div class="col-md-12">
+            <div class="container">
+                <div class="row">
+                    <div class="res-int col-md-1">
+                        <span>{{ restaurant.name | limitTo : 1 }}</span>
+                    </div>
+                    <div class="res-name col-md-7">
+                        <div class="res-title">
+                            <h1>{{ restaurant.name }} </h1>
+                        </div>
+                    </div>
+                    <div class="res-links col-md-4">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <a ui-sref="restaurantOwner({rId:restaurant.id})" class="res-backlink btn btn-primary">
+                                    <i class="icon-arrow-left3"></i>
+                                    <span>{{ 'BACKLINK' | translate }}</span>
+                                </a>
+                            </div>
+                            <div class="col-sm-3" ng-hide="hasOwner">
+                                <a class="btn btn-primary" ng-click="postRestaurant()">
+                                    {{ 'EDITRESTSUBMIT' | translate }}</span>
+                                </a>
+                            </div>
+                            <div class="col-sm-3" ng-show="hasOwner">
+                                <a class="btn btn-primary" ng-click="updateRestaurant()">
+                                    {{ 'UPDATE' | translate }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body oneRow ">
+        <!-- Form actions layout section start -->
+        <section id="form-action-layouts">
+            <div class="row match-height edit-restaurant">
+                <div class="col-md-6">
+                    <!-- Restaurant Details -->
+                    <div class="card">
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <form class="form">
+                                    <div class="form-body">
+                                        <h4 class="form-section">
+                                            <i class="icon-clipboard4"></i>{{ 'RESTDET' | translate }}</h4>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label>{{ 'RESTNAME' | translate }}</label>
+                                                <input type="text" ng-model="restaurant.name" class="form-control" placeholder="Restaurant Name">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6 mb-2">
+                                                <label>{{ 'RESTOFFERING' | translate }}</label>
+                                                <select ng-model="restaurant.type" class="form-control">
+                                                    <option value="breakfast">Breakfast</option>
+                                                    <option value="brunch">Brunch</option>
+                                                    <option value="lunch">Lunch</option>
+                                                    <option value="dinner">Dinner</option>
+                                                    <option value="late_night">Late Night</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6 mb-2">
+                                                <label>{{ 'RESTCUS' | translate }}</label>
+                                                <select ng-model="restaurant.cuisine" class="form-control">
+                                                    <option ng-repeat="c in cuisines" value="{{c}}">{{ 'CUISINES.'+c | translate }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label>{{ 'RESTDESC' | translate }}</label>
+                                                <textarea ng-model="restaurant.desc" rows="5" class="form-control" name="comment" placeholder="{{ 'RESTDESCPLACE' | translate }}"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label>{{ 'MENULOAD' | translate }} [PDF, JPG] </label>
+                                                <label class="file center-block">
+                                                    <input type="file" id="file">
+                                                    <span class="file-custom"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Of Restaurant Details -->
+                    <!-- Opening Times -->
+                    <div class="card">
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <form class="form">
+                                    <div class="form-body">
+                                        <h4 class="form-section">
+                                            <i class="icon-clipboard4"></i>{{ 'RESTTIMETITLE' | translate }}</h4>
+                                        <div class="row">
+                                            <div class="form-group row col-md-12">
+                                                <div class="col-md-4 offset-md-4">
+                                                    <p>{{'RESTTIMEOPEN' | translate }}</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p>{{'RESTTIMECLOSE' | translate }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row col-md-12">
+                                                <label class="col-md-4 label-control">{{ 'DAYS.Monday' | translate }}
+                                                </label>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Mon[0].from" type="text" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Mon[0].to" type="text" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row col-md-12">
+                                                <label class="col-md-4 label-control">{{ 'DAYS.Tuesday' | translate }}
+                                                </label>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Tue[0].from" type="text" id="openTime2" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Tue[0].to" id="closeTime2" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row col-md-12">
+                                                <label class="col-md-4 label-control">{{ 'DAYS.Wednesday' | translate }}
+                                                </label>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Wed[0].from" id="openTime3" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Wed[0].to" id="closeTime3" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row col-md-12">
+                                                <label class="col-md-4 label-control">{{ 'DAYS.Thursday' | translate }}
+                                                </label>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Thu[0].from" id="openTime4" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Thu[0].to" id="closeTime4" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row col-md-12">
+                                                <label class="col-md-4 label-control">{{ 'DAYS.Friday' | translate }}
+                                                </label>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Fri[0].from" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Fri[0].to" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row col-md-12">
+                                                <label class="col-md-4 label-control">{{ 'DAYS.Saturday' | translate }} </label>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Sat[0].from" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Sat[0].to" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row col-md-12">
+                                                <label class="col-md-4 label-control">{{ 'DAYS.Sunday' | translate }} </label>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Sun[0].from" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input ng-model="restaurant.hours.Sun[0].to" class="form-control">
+                                                        <div class="form-control-position">
+                                                            <i class="icon-clock5"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Of Opening Times -->
+                </div>
+                <div class="col-md-6">
+                    <!-- Contact Info & Bio -->
+                    <div class="card">
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <form class="form">
+                                    <div class="form-body">
+                                        <h4 class="form-section">
+                                            <i class="icon-mail6"></i>{{ 'RESTCONTACTTITLE' | translate }}</h4>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label>{{ 'RESTMAIL' | translate }}</label>
+                                                <input ng-model="restaurant.mail" class="form-control border-primary" type="text" placeholder="email">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label for="userinput6">{{ 'RESTWEBSITE' | translate }}</label>
+                                                <input ng-model="restaurant.website" class="form-control border-primary" type="url" placeholder="http://">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label>{{ 'RESTPHONE' | translate }}</label>
+                                                <input class="form-control border-primary" ng-model="restaurant.phone">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Of Contact Info & Bio -->
+                    <!-- Start Of Company Info  -->
+                    <div class="card">
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <form class="form">
+                                    <div class="form-body">
+                                        <h4 class="form-section">
+                                            <i class="icon-mail6"></i>{{'RESTCOMPTITLE'| translate }}</h4>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <h5>{{'RESTVALINFO' | translate }}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label>{{ 'RESTCOMPANYNAME' | translate }}</label>
+                                                <input class="form-control border-primary" ng-model="restaurant.name">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label>{{ 'RESTCOMPANYADRESS' | translate }}</label>
+                                                <input class="form-control border-primary" ng-model="restaurant.address">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 mb-2">
+                                                <label>{{ 'RESTVAT' | translate }}</label>
+                                                <input class="form-control border-primary" ng-model="restaurant.vat">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Of Company Info  -->
+                    <!-- Social Media -->
+                    <div class="card">
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <form class="form">
+                                    <div class="form-body">
+                                        <h4 class="form-section">
+                                            <i class="icon-eye6"></i>Social Media</h4>
+                                        <div class="row">
+                                            <div class="form-group col-xs-6 mb-2">
+                                                <label for="userinput5">Facebook</label>
+                                                <input class="form-control border-primary" type="email" placeholder="Add Link" id="userinput5">
+                                            </div>
+                                            <div class="form-group col-xs-6 mb-2">
+                                                <label for="userinput6">Twitter</label>
+                                                <input class="form-control border-primary" type="url" placeholder="Add Link" id="userinput6">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-6 mb-2">
+                                                <label>Trip Advisor</label>
+                                                <input class="form-control border-primary" type="tel" placeholder="Add Link" id="userinput7">
+                                            </div>
+                                            <div class="form-group col-xs-6 mb-2">
+                                                <label>Zomato</label>
+                                                <input class="form-control border-primary" type="tel" placeholder="Add Link" id="userinput7">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Of Social Media -->
+                    <!-- Images Uploader -->
+                    <div class="content-body">
+                        <!-- jQuery file uploader section start -->
+                        <section id="dropzone-examples">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Upload Images</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-block">
+                                                <!-- The file upload form used as target for the file upload widget -->
+                                                <form id="fileupload" action="../../../app-assets/jquery-file-upload/server/php/" method="POST" enctype="multipart/form-data">
+                                                    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                                                    <noscript>
+                                                        <input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/">
+                                                    </noscript>
+                                                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                                                    <div class="row fileupload-buttonbar">
+                                                        <div class="col-lg-7">
+                                                            <!-- The fileinput-button span is used to style the file input field as button -->
+                                                            <span class="btn btn-success fileinput-button mr-1">
+                                <i class="icon-plus4"></i>
+                                <span>Add files...</span>
+
+                                  <input filepicker type="filepicker" ng-model="img" data-fp-multiple="true"
+                                         data-fp-services="computer,facebook,instagram,box"
+                                         on-success="getFileArtistPhoto(event.fpfiles)"/>
+
+                               
+
+
+
+                              </span>
+                                                        </div>
+                                                        <!--{{pickMultipleResults.url}}-->
+                                                        <!-- The global progress state -->
+                                                        <div class="col-lg-5  ">
+                                                            <ng-image-gallery images="restaurantImg" methods="methods" conf="conf" thumbnails="thumbnails" thumb-size="thumbSize" inline="inline"
+                                                                bubbles="bubbles" bubble-size="bubbleSize" img-bubbles="imgBubbles"
+                                                                bg-close="bgClose" piracy="true" n-open="opened();" on-close="closed();"
+                                                                on-delete="delete(img, cb)" bg-close="false">
+                                                            </ng-image-gallery>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- // jQuery file uploader section end -->
+                    </div>
+                    <!-- Images Uploader Ends -->
+                </div>
+            </div>
+        </section>
+        <!-- // Form actions layout section end -->
+    </div>
+</div>

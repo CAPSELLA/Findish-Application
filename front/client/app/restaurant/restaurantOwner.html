@@ -1,0 +1,119 @@
+<div class="page-restaurant">
+    <div class="row rest-header oneRow">
+        <div class="col-md-12">
+            <div class="container">
+                <div class="row">
+                    <div class="res-int col-md-1">
+                        <span>{{ restaurant.name | limitTo : 1 }}</span>
+                    </div>
+                    <div class="res-name col-md-7 col-sm-12">
+                        <div class="res-title">
+                            <h1>{{ restaurant.name }}</h1>
+                            <span class="cta-title" ng-click="claimRest()">Owner? Upload Images</span>
+                        </div>
+                    </div>
+                    <div class="res-links col-md-4">
+                        <a ui-sref="searchOwner" class="btn res-backlink btn-primary">
+                            <i class="icon-arrow-left3"></i>
+                            <span>{{ 'BACKLINK' | translate }}</span>
+                        </a>
+                        <span class="owner-flag">
+                            <i class="icon-flag3"></i>
+                        </span>
+                        <a ng-click="claimRest()" class="btn res-claim btn-primary">OWNER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row restaurant-information">
+    <div class="col-md-5">
+        <div class="restaurant-panel panel">
+            <!-- <p>{{ restaurant.description }}</p>-->
+            <p>{{'RESTADDRESS' | translate }}:
+                <strong>{{ restaurant.address}} </strong>
+            </p>
+            <p ng-show="restaurant.OpenHours">{{'RESTHOURS' | translate }} :
+                <strong>{{ 'OPENTODAYFROM' | translate }} {{restaurant.OpenHours[0].from}} {{ 'OPENTODAYTO' | translate }} {{restaurant.OpenHours[0].to}}
+                </strong>
+            </p>
+            <p ng-show="restaurant.phone">{{ 'RESTPHONE' | translate }}:
+                <a href="tel:{{ restaurant.phone }}">
+                    <strong>{{ restaurant.phone }} </strong>
+                </a>
+            </p>
+            <p ng-show="restaurant.website">{{ 'RESTWEBSITE' | translate }}:
+                <a href="{{restaurant.website}}" target="_blank">
+                    {{restaurant.website}}
+                    <!--<strong>
+                            <i class=" fa fa-external-link"></i>
+                        </strong>-->
+                </a>
+            </p>
+            <p ng-show="restaurant.email">{{ 'RESTMAIL' | translate }}:
+                <strong>{{ restaurant.email }}</strong>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-6">
+                <ng-map default-style="true" center="{{restaurant.lat}},{{restaurant.lng}}" zoom="13" styles='[{"featureType": "administrative", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -100},{"lightness": 20}]},{"featureType": "road", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -100},{"lightness": 40}]},{"featureType": "water", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -10},{"lightness": 30}]},{"featureType": "landscape.man_made", "elementType": "all", "stylers": [{"visibility": "simplified"},{"saturation": -60},{"lightness": 10}]},{"featureType": "landscape.natural", "elementType": "all", "stylers": [{"visibility": "simplified"},{"saturation": -60},{"lightness": 60}]},{"featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"},{"saturation": -100},{"lightness": 60}]},{"featureType": "transit", "elementType": "all", "stylers": [{"visibility": "off"},{"saturation": -100},{"lightness": 60}]}]'>
+                    <marker id="foo" position="{{restaurant.lat}},{{restaurant.lng}}" icon="{url:'../../assets/meal_images/mapicon.png',scaledSize:[30,45]}"
+                        on-click="map.showInfoWindow('bar')">
+                    </marker>
+                </ng-map>
+            </div>
+            <div class="col-md-6">
+                <div class="image-gallery small" ng-show="restaurant.pictures">
+                    <ng-image-gallery images="restaurant.pictures" methods="methods" conf="conf" thumbnails="thumbnails" thumb-size="thumbSize"
+                        inline="inline" bubbles="bubbles" bubble-size="bubbleSize" img-bubbles="imgBubbles" bg-close="bgClose"
+                        piracy="true" n-open="opened();" on-close="closed();" on-delete="delete(img, cb)" bg-close="false">
+                    </ng-image-gallery>
+                </div>
+                <div class="image-gallery small" ng-hide="restaurant.pictures">
+                    <img src="../assets/meal_images/image-gallery.png">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row restaurant-information">
+    <div class="col-md-12">
+        <div class="chart-box">
+            <div class="row">
+                <div class="col-md-2 extra-fields">
+                    <div class="restaurant-social">
+                        <p>{{ 'SHARETITLE' | translate }}</p>
+                        <div class="social-icons">
+                            <img src="../assets/meal_images/social_icons/facebook_icon.png" alt="avatar">
+                            <img src="../assets/meal_images/social_icons/twitter_icon.png" alt="avatar">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 chart">
+                    <div data-echarts data-options="scoreDiagramm.options" style="height: 400px;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats">
+                        <img src="../assets/meal_images/stats.gif">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <a href="https://www.accuweather.com/en/cz/prague/125594/weather-forecast/125594" class="aw-widget-legal">
+                        <!--
+                                By accessing and/or using this code snippet, you agree to AccuWeather’s terms and conditions (in English) which can be found at https://www.accuweather.com/en/free-weather-widgets/terms and AccuWeather’s Privacy Statement (in English) which can be found at https://www.accuweather.com/en/privacy.
+                                -->
+                    </a>
+                    <div id="awcc1518019100364" class="aw-widget-current" data-locationkey="125594" data-unit="c" data-language="en-us" data-useip="false"
+                        data-uid="awcc1518019100364"></div>
+                    <script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

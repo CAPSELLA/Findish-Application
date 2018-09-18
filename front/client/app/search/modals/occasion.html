@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">{{ 'OCCASIONQUESTION' | translate }}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+
+    <label class="display-inline-block custom-control custom-radio">
+        <input ng-model="$occ.meal" class="custom-control-input" value="breakfast" type="radio">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{ 'MEALTYPES.Breakfast' | translate }}</span>
+    </label>
+
+    <label class="display-inline-block custom-control custom-radio">
+        <input ng-model="$occ.meal" class="custom-control-input" value="brunch" type="radio">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{ 'MEALTYPES.Brunch' | translate }}</span>
+    </label>
+
+    <label class="display-inline-block custom-control custom-radio">
+        <input ng-model="$occ.meal" class="custom-control-input" value="lunch" type="radio">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{ 'MEALTYPES.Lunch' | translate }}</span>
+    </label>
+
+    <label class="display-inline-block custom-control custom-radio">
+        <input ng-model="$occ.meal" class="custom-control-input" value="dinner" type="radio">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{ 'MEALTYPES.Dinner' | translate }}</span>
+    </label>
+
+    <label class="display-inline-block custom-control custom-radio">
+        <input ng-model="$occ.meal" class="custom-control-input" value="late night" type="radio">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{ 'MEALTYPES.LateNight' | translate }}</span>
+    </label>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$occ.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="$occ.cancel()">Cancel</button>
+</div>

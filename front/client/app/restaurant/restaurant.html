@@ -1,0 +1,134 @@
+<div class="page-restaurant">
+    <div class="row rest-header oneRow">
+        <div class="col-md-12">
+            <div class="container">
+                <div class="row">
+                    <div class="res-int col-md-1">
+                        <span>{{ restaurant.name | limitTo : 1 }}</span>
+                    </div>
+                    <div class="res-name col-md-8 col-sm-12">
+                        <div class="res-title">
+                            <h1>{{ restaurant.name }}</h1>
+                            <h4 ng-show="dish" class="search-term"> / {{dish}}</h4>
+                        </div>
+                        <div class="res-grade">
+                            <span>{{restaurant.overall}}</span>
+                        </div>
+                    </div>
+                    <div class="res-links col-md-3">
+                        <div class="row">
+                            <div class="col-sm-4 offset-md-2">
+                                <a ui-sref="search" class="btn res-backlink btn-primary">
+                                    <i class="icon-arrow-left3"></i>
+                                    <span>{{ 'BACKLINK' | translate }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row restaurant-information">
+        <div class="col-md-5">
+            <div class="restaurant-panel panel">
+                <!--<h5>{{ restaurant.name.toString() }}</h5> -->
+                <p>{{ restaurant.description }}</p>
+                <p>{{'RESTADDRESS' | translate }}:
+                    <strong>{{ restaurant.address}} </strong>
+                </p>
+                <p ng-show="restaurant.OpenHours">{{'RESTHOURS' | translate }} :
+                    <strong>{{ 'OPENTODAYFROM' | translate }} {{restaurant.OpenHours[0].from}} {{ 'OPENTODAYTO' | translate }} {{restaurant.OpenHours[0].to}}
+                    </strong>
+                </p>
+                <p ng-show="restaurant.phone">{{ 'RESTPHONE' | translate }}:
+                    <a href="tel:{{ restaurant.phone }}">
+                        <strong>{{ restaurant.phone }} </strong>
+                    </a>
+                </p>
+                <p ng-show="restaurant.website">{{ 'RESTWEBSITE' | translate }}:
+                    <a href="{{restaurant.website}}" target="_blank">
+                        {{restaurant.website}}
+                        <!-- <strong>
+                            <i class=" fa fa-external-link"></i>
+                        </strong> -->
+                    </a>
+                </p>
+                <p ng-show="restaurant.email">{{ 'RESTMAIL' | translate }}:
+                    <strong>{{ restaurant.email }}</strong>
+                </p>
+                <p>{{ 'DISTANCE' | translate }}:
+                    <strong>{{map.directionsRenderers[0].directions.routes[0].legs[0].distance.text }}</strong>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <ng-map center="[{{loc.lat}},{{loc.lng}}]" zoom="13" styles='[{"featureType": "administrative", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -100},{"lightness": 20}]},{"featureType": "road", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -100},{"lightness": 40}]},{"featureType": "water", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -10},{"lightness": 30}]},{"featureType": "landscape.man_made", "elementType": "all", "stylers": [{"visibility": "simplified"},{"saturation": -60},{"lightness": 10}]},{"featureType": "landscape.natural", "elementType": "all", "stylers": [{"visibility": "simplified"},{"saturation": -60},{"lightness": 60}]},{"featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"},{"saturation": -100},{"lightness": 60}]},{"featureType": "transit", "elementType": "all", "stylers": [{"visibility": "off"},{"saturation": -100},{"lightness": 60}]}]'>
+                <directions suppress-markers="true" draggable="true" travel-mode="WALKING" origin="[{{loc.lat}},{{loc.lng}}]" destination="[{{restaurant.lat}},{{restaurant.lng}}]">
+                    <marker id="start" position="[{{loc.lat}},{{loc.lng}}]" icon="{url:'../../assets/meal_images/map-icon.png',scaledSize:[30,45]}"></marker>
+                    <marker id="end" position="[{{restaurant.lat}},{{restaurant.lng}}]" icon="{url:'../../assets/meal_images/mapicon.png',scaledSize:[30,45]}"></marker>
+            </ng-map>
+
+
+
+            <a target="_blank" href="https://www.google.com/maps/dir/?api=1&origin={{restaurant.lat}},{{restaurant.lng}}&destination={{loc.lat}},{{loc.lng}}&travelmode=driving">{{ 'DESTINATION' | translate }}</a>
+
+
+        </div>
+    </div>
+    <div class="row restaurant-information">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <div class="row">
+                    <div class="col-md-2 extra-fields">
+                        <div class="res-grade-legend">
+                            <ul>
+                                <li class="high-score">{{ 'SCORELEG.HIGH' | translate }}</li>
+                                <li class="medium-score">{{ 'SCORELEG.MEDIUM' | translate }}</li>
+                                <li class="low-score">{{ 'SCORELEG.LOW' | translate }}</li>
+                            </ul>
+                        </div>
+                        <div class="res-grade res-grade-box {{ gradecolor }} ">
+                            <span>{{restaurant.overall}}</span>
+                        </div>
+                        <div class="restaurant-social">
+                            <p>{{ 'SHARETITLE' | translate }}</p>
+                            <div class="social-icons">
+                                <a href="#" target="_blank" socialshare socialshare-provider="twitter" socialshare-text="{{restaurant.name}}" socialshare-hashtags="meal,meal-prediction"
+                                    socialshare-url="Our site">
+                                    <img src="../assets/meal_images/social_icons/twitter_icon.png" alt="avatar"> </a>
+
+                                <a href="#" target="_blank" socialshare socialshare-provider="facebook" socialshare-text="{{restaurant.name}}" socialshare-hashtags="meal,meal-prediction"
+                                    socialshare-url="{{restaurant.website}}">
+                                    <img src="../assets/meal_images/social_icons/facebook_icon.png" alt="avatar"> </a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 chart">
+                        <div data-echarts data-options="scoreDiagramm.options" style="height: 400px;">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="image-gallery small" ng-show="restaurant.pictures">
+                            <ng-image-gallery images="restaurant.pictures" methods="methods" conf="conf" thumbnails="thumbnails" thumb-size="thumbSize"
+                                inline="inline" bubbles="bubbles" bubble-size="bubbleSize" img-bubbles="imgBubbles" bg-close="bgClose"
+                                piracy="true" n-open="opened();" on-close="closed();" on-delete="delete(img, cb)" bg-close="false">
+                            </ng-image-gallery>
+                        </div>
+                        <div class="image-gallery" ng-hide="restaurant.pictures">
+                            <img src="../assets/meal_images/image-gallery.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row restaurant-information">
+        <div class="col-md-12">
+            <img src="../assets/meal_images/adverstisments.jpg">
+        </div>
+    </div>
+
+</div>

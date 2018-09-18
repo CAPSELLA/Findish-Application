@@ -1,0 +1,5 @@
+# RUN WITH NODE_ENV=production
+api:
+mongoDb: {uri: [MONGO URI}
+server: {name: [SERVER] , port: 8080}
+

@@ -1,0 +1,165 @@
+<div class="page-restaurantsearch">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row search-header">
+                <form name="submit-search" ng-submit="sendSearch()">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <input class="search-input" id="meal-search" type="text" ng-model="search.menu"
+                                       placeholder="{{ 'SEARCHBYMEAL_PLACEHOLDER' | translate }}">
+                                <span class="secondary-search" ng-click="openOccasion()">
+                                    {{ 'OCCASIONCALL' | translate }}
+                                </span>
+                            </div>
+                            <div class="col-md-5">
+                                <input class="search-input" places-auto-complete ng-model="search_adress"
+                                       component-restrictions="{country:['cz','gr']}"
+                                       on-place-changed="placeChanged()"/>
+                                <span class="secondary-search" ng-click="locateMe()">
+                                    {{ 'LOCATECALL' | translate }}
+                                </span>
+                            </div>
+                            <div class="col-md-2">
+                                <input id="meal-search-button" type="image" name="submit"
+                                       src="../../assets/meal_images/search.png">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row map">
+                <ng-map center="{{search_location}}" zoom="14" style="height: 400px;"
+                        styles='[{"featureType": "administrative", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -100},{"lightness": 20}]},{"featureType": "road", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -100},{"lightness": 40}]},{"featureType": "water", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -10},{"lightness": 30}]},{"featureType": "landscape.man_made", "elementType": "all", "stylers": [{"visibility": "simplified"},{"saturation": -60},{"lightness": 10}]},{"featureType": "landscape.natural", "elementType": "all", "stylers": [{"visibility": "simplified"},{"saturation": -60},{"lightness": 60}]},{"featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"},{"saturation": -100},{"lightness": 60}]},{"featureType": "transit", "elementType": "all", "stylers": [{"visibility": "off"},{"saturation": -100},{"lightness": 60}]}]'>
+                    <!-- Position to used for search -->
+                    <marker position="{{search_location}}" centered="true"
+                            icon="{url:'../../assets/meal_images/map-icon.png',scaledSize:[30,45]}"></marker>
+                    <!-- Restaurant List -->
+                    <marker id="{{r.id}}" position="[{{r.lat}},{{r.lng}}]"
+                            icon="{url:'../../assets/meal_images/mapicon.png',scaledSize:[30,45]}"
+                            ng-repeat="r in restaurant_list" on-click="showWindowRestaurant({{r}})"></marker>
+                    <info-window id="rest-wi">
+                        <div class="restaurant-infowindow" ng-non-bindable>
+                            <div class="map-score">
+                                <span>{{active_rest_map.overall}}</span>
+                            </div>
+                            <h3 ng-click="showRest(active_rest_map.id)">{{active_rest_map.name}}</h3>
+                            <div class="map-dist">
+                                {{active_rest_map.distance}}
+                            </div>
+                        </div>
+                    </info-window>
+                </ng-map>
+            </div>
+            <div class="results-container row ">
+                <div class="col-md-3 offset-md-1">
+
+                    <uib-accordion close-others="oneAtATime">
+
+                    <div class="filter_checkbox">
+
+                            <div uib-accordion-group class="panel-default">
+                                <uib-accordion-heading>
+                                    <h1>More Filters<span class="fas fa-sort-down pull-right filter-icons"></span></h1>
+                                </uib-accordion-heading>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <label class="container_li" ng-repeat="val in restFetaure">{{val}}
+                                            <input type="checkbox" ng-click="searchValues(val)">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+
+                    <div class="filter_checkbox">
+
+                            <div uib-accordion-group class="panel-default">
+                                <uib-accordion-heading>
+                                    <h1>Search Cuisine<span class="fas fa-sort-down pull-right filter-icons"></span></h1>
+                                </uib-accordion-heading>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <label class="container_li" ng-repeat="val in uniqueCuisineNames">{{val}}
+                                            <input type="checkbox" ng-click="searchCuisine(val)">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+
+                    </uib-accordion>
+
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="row filters" ng-show="restaurant_list">
+                        <div class="col-md-12">
+                            <div class="filter-container">
+                                <span>{{'FITLERTITLE' | translate }}</span>
+                                <div class="filter" ng-class="{'active':order_by=='overall'}"
+                                     ng-click="orderRest('overall')">
+                                    {{'FITLER1' | translate }}
+                                </div>
+                                <div class="filter" ng-class="{'active':order_by=='foodprice'}"
+                                     ng-click="orderRest('foodprice')">
+                                    {{'FITLER2' | translate }}
+                                </div>
+                                <div class="filter" ng-class="{'active':order_by=='distance'}"
+                                     ng-click="orderRest('distance')">
+                                    {{'FITLER3' | translate }}
+                                </div>
+                                <div class="filter" ng-class="{'active':order_by=='ambience'}"
+                                     ng-click="orderRest('ambience')">
+                                    {{'FITLER4' | translate }}
+                                </div>
+
+                                <!--<div class="filter active" ng-click="clearFilter()">-->
+                                    <!--Clear All filter-->
+                                <!--</div>-->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-results" ng-show="noresults">
+                        <div class="col-md-12">
+                            <p>
+                                {{'SEARCHNORESULTS' | translate }}
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="row results" ng-show="restaurant_list">
+                        <div class="col-md-12">
+
+                            <div class="row restaurant"
+                                 ng-repeat="r in hasdata  | orderBy: order_by : order_reverse | filter:{name:nameRes}"
+                                 ng-click="showRest(r.id)"
+                                 ng-show="!isSearch">
+                                <div class="initial col-md-1">{{r.name | limitTo : 1 }}</div>
+                                <div class="name col-md-9">{{r.name }}</div>
+                                <div class="grade {{order_by}} col-md-2">{{r[order_by]}}</div>
+
+                            </div>
+
+                            <div class="row restaurant" ng-repeat="searchResult in uniqueStandards"
+                                 ng-click="showRest(searchResult.id)" ng-show="isSearch">
+                                <div class="initial col-md-1">{{searchResult.name | limitTo : 1 }}</div>
+                                <div class="name col-md-9">{{searchResult.name }}</div>
+                                <div class="grade {{order_by}} col-md-2">{{searchResult[order_by]}}</div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="page-restaurantsearch">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row margin-top">
+                <div class="col-md-10 offset-md-1">
+                    <h2>{{'SEARCHOWNERTILE' | translate }}</h2>
+                </div>
+            </div>
+            <div class="row search-header">
+                <form name="search-adress" ng-submit="findAdress()">
+                    <div class="col-md-4 offset-md-1">
+                        <input class="search-input" places-auto-complete id="meal-search" type="text" ng-model="search_adress" component-restrictions="{country:['cz','gr']}">
+                    </div>
+                    <div class="col-md-1">
+                        <input id="meal-search-button" type="image" name="submit" src="../../assets/meal_images/search.png">
+                    </div>
+                    <div class="col-md-2">
+                        <button ng-show="showSearch" type="button" ng-click="sendSearch()" class="btn btn-primary btn-block">{{'SEARCHOWNERSUBMIT' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row map">
+                <ng-map center="{{search_location}}" zoom="{{zoom}}" style="height: 400px;" styles='[{"featureType": "administrative", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -100},{"lightness": 20}]},{"featureType": "road", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -100},{"lightness": 40}]},{"featureType": "water", "elementType": "all", "stylers": [{"visibility": "on"},{"saturation": -10},{"lightness": 30}]},{"featureType": "landscape.man_made", "elementType": "all", "stylers": [{"visibility": "simplified"},{"saturation": -60},{"lightness": 10}]},{"featureType": "landscape.natural", "elementType": "all", "stylers": [{"visibility": "simplified"},{"saturation": -60},{"lightness": 60}]},{"featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"},{"saturation": -100},{"lightness": 60}]},{"featureType": "transit", "elementType": "all", "stylers": [{"visibility": "off"},{"saturation": -100},{"lightness": 60}]}]'>
+                    <!-- Position to used for search -->
+                    <marker draggable position="{{search_location}}" centered="true" icon="{url:'../../assets/meal_images/map-icon.png',scaledSize:[30,45]}"></marker>
+                    <!-- Restaurant List -->
+                    <marker id="{{r.id}}" position="[{{r.lat}},{{r.lng}}]" icon="{url:'../../assets/meal_images/mapicon.png',scaledSize:[30,45]}"
+                        ng-repeat="r in restaurant_list" on-click="showWindowRestaurant({{r}})"></marker>
+                    <info-window id="rest-wi">
+                        <div ng-click="showRest(active_rest_map.id)" class="restaurant-infowindow" ng-non-bindable>
+                            <h3>{{active_rest_map.name}}</h3>
+                            <span class="btn btn-primary">{{'CLAIM' | translate }} </span>
+                        </div>
+                    </info-window>
+                </ng-map>
+            </div>
+            <div class="row no-results" ng-show="noresults">
+                <div class="col-md-12">
+                    <p>
+                        {{'SEARCHNORESULTS' | translate }}
+                    </p>
+                    <h5 class="owner-desc"> {{'SEARCHNOTYOURS' | translate }} </h5>
+                </div>
+            </div>
+            <div class="row results" ng-show="restaurant_list">
+                <div class="col-md-5 offset-md-4">
+                    <div class="row">
+                        <h5 class="owner-desc"> {{'OWNERPROMPT'| translate }} </h5>
+                    </div>
+                    <div class="row restaurant" ng-repeat="r in restaurant_list | orderBy: 'distance' : false | filter:colourFilter" ng-click="showRest(r.id)">
+                        <div class="initial col-sm-1">{{r.name | limitTo : 1 }}</div>
+                        <div class="name col-sm-9">{{r.name }}</div>
+                        <div class="claim-cta col-sm-1">
+                            <span class="claim-cta-text">{{'CLAIM' | translate }}</span>
+                            <span class="owner-flag">
+                                <i class="icon-flag3"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h5 class="owner-desc"> {{'SEARCHNOTYOURS' | translate }} </h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
